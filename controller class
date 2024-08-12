@@ -1,0 +1,30 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/urls")
+public class UrlController {
+
+    @Autowired
+    private UrlService urlService;
+
+    @PostMapping("/shorten")
+    public String shortenUrl(@RequestParam String destinationUrl) {
+        return urlService.shortenUrl(destinationUrl);
+    }
+
+    @PostMapping("/update")
+    public boolean updateShortUrl(@RequestParam String shortUrl, @RequestParam String newDestinationUrl) {
+        return urlService.updateShortUrl(shortUrl, newDestinationUrl);
+    }
+
+    @GetMapping("/resolve")
+    public String getDestinationUrl(@RequestParam String shortUrl) {
+        return urlService.getDestinationUrl(shortUrl);
+    }
+
+    @PostMapping("/update-expiry")
+    public boolean updateExpiry(@RequestParam String shortUrl, @RequestParam int daysToAdd) {
+        return urlService.updateExpiry(shortUrl, daysToAdd);
+    }
+}
